@@ -49,20 +49,21 @@ const labelBaseStyles = ({ theme }) => css`
   }
 `;
 
-const labelCheckedStyles = ({ theme, checked }) =>
-  checked &&
-  css`
-    label: checkbox--active;
+const labelCheckedStyles = ({ theme, checked, value }) =>
+  checked ||
+  (value === true &&
+    css`
+      label: checkbox--active;
 
-    &::before {
-      border-color: ${theme.colors.p500};
-    }
+      &::before {
+        border-color: ${theme.colors.p500};
+      }
 
-    &::after {
-      transform: translateY(-50%) scale(1, 1);
-      opacity: 1;
-    }
-  `;
+      &::after {
+        transform: translateY(-50%) scale(1, 1);
+        opacity: 1;
+      }
+    `);
 
 const labelInvalidStyles = ({ theme, invalid }) =>
   invalid &&
@@ -139,7 +140,7 @@ Checkbox.propTypes = {
   /**
    * Value string for input.
    */
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
+  value: PropTypes.oneOf([PropTypes.string, PropTypes.bool, PropTypes.array]),
   /**
    * Child nodes to be rendered as the label.
    */
