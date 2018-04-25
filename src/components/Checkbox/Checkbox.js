@@ -124,7 +124,7 @@ const Checkbox = ({ onChange, children, id: customId, ...props }) => {
   const id = customId || uniqueId('checkbox_');
   return (
     <Fragment>
-      <CheckboxInput id={id} onChange={onChange} type="checkbox" {...props} />
+      <CheckboxInput id={id} onChange={e => { console.log(e); debugger; return onChange(e); }} type="checkbox" {...props} />
       <CheckboxLabel htmlFor={id} {...props}>
         {children}
       </CheckboxLabel>
