@@ -21,6 +21,7 @@ const labelBaseStyles = ({ theme }) => css`
 
   &::before {
     ${size(theme.spacings.mega)};
+    box-sizing: border-box;
     box-shadow: inset 0 1px 2px 0 rgba(102, 113, 123, 0.12);
     background-color: ${theme.colors.white};
     border: 1px solid ${theme.colors.n500};
@@ -36,15 +37,15 @@ const labelBaseStyles = ({ theme }) => css`
 
   &::after {
     ${size(10)};
-
-    line-height: 0;
+    box-sizing: border-box;
     content: url("${checkmarkSvg(theme.colors.p500)}");
     display: block;
+    left: 3px;
+    line-height: 0;
+    opacity: 0;
     position: absolute;
     top: 50%;
-    left: 3px;
     transform: translateY(-50%) scale(0, 0);
-    opacity: 0;
     transition: transform 0.05s ease-in, opacity 0.05s ease-in;
   }
 
@@ -117,7 +118,7 @@ const Checkbox = ({ onChange, children, id: customId, ...props }) => {
   const id = customId || uniqueId('checkbox_');
   return (
     <Fragment>
-      <CheckboxInput id={id} onChange={onChange} type="checkbox" {...props} />
+      <CheckboxInput id={id} onClick={onChange} type="checkbox" {...props} />
       <CheckboxLabel htmlFor={id} {...props}>
         {children}
       </CheckboxLabel>
@@ -169,6 +170,7 @@ Checkbox.propTypes = {
 Checkbox.defaultProps = {
   id: null,
   checked: false,
+  value: null,
   invalid: false,
   disabled: false,
   children: null
