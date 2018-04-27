@@ -74,7 +74,7 @@ RadioButtonGroup.propTypes = {
   /**
    * Whether to omit the default margin bottom.
    */
-  noMargin: PropTypes.bool
+  noMargin: PropTypes.bool // eslint-disable-line
 };
 
 RadioButtonGroup.defaultProps = {
