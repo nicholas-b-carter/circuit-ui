@@ -5,12 +5,13 @@ import { withTheme } from 'emotion-theming';
 import { hideVisually } from 'polished';
 
 import { flow, toPairs, map, keys } from '../../../../util/fp';
-import Input from '../../../Input';
+import MaskedInput from '../../../MaskedInput';
 import Label from '../../../Label';
 import {
   isDisabledSchemeIcon,
   hasDetectedScheme,
-  shouldRenderSchemesUnderInput
+  shouldRenderSchemesUnderInput,
+  CARD_NUMBER_MASK
 } from './CardNumberInputService';
 import { disableVisually } from '../../../../styles/style-helpers';
 
@@ -106,7 +107,7 @@ const SchemeIconWrapper = styled('li')`
 `;
 
 /**
- * Describe your component here.
+ * A credit card number input.
  */
 const CardNumberInput = ({
   acceptedCardSchemes,
@@ -119,6 +120,7 @@ const CardNumberInput = ({
   theme,
   supportedSchemesLabel,
   detectedSchemeLabel,
+  onChange,
   ...props
 }) => {
   const supportedSchemesText = `${supportedSchemesLabel}: ${keys(
@@ -136,7 +138,7 @@ const CardNumberInput = ({
         {detectedSchemesText}
       </AccessibleCardSchemeInfo>
       <Label htmlFor={id}>{label}</Label>
-      <Input
+      <MaskedInput
         value={value}
         type="tel"
         id={id}
@@ -148,6 +150,8 @@ const CardNumberInput = ({
           acceptedCardSchemes,
           className
         })}
+        guide={false}
+        mask={CARD_NUMBER_MASK}
       >
         <SchemeList {...{ acceptedCardSchemes }} aria-hidden="true">
           {flow(
@@ -166,7 +170,7 @@ const CardNumberInput = ({
             ))
           )(acceptedCardSchemes)}
         </SchemeList>
-      </Input>
+      </MaskedInput>
     </Fragment>
   );
 };
@@ -176,6 +180,10 @@ CardNumberInput.propTypes = {
    * Card scheme icon components.
    */
   acceptedCardSchemes: PropTypes.objectOf(PropTypes.func).isRequired,
+  /**
+   * The change handler.
+   */
+  onChange: PropTypes.func.isRequired,
   /**
    * The detected card scheme.
    */
